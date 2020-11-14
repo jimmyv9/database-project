@@ -21,6 +21,10 @@ CREATE TABLE IF NOT EXISTS ADDRESS (
 	apt_no VARCHAR(10)
 );
 
+CREATE TABLE IF NOT EXISTS MALL_FLOOR (
+	floor_id INT NOT NULL PRIMARY KEY
+);
+
 CREATE SEQUENCE IF NOT EXISTS store_seq;
 CREATE TABLE IF NOT EXISTS STORE (
 	store_id CHAR(5) DEFAULT to_char(nextval('store_seq'), 'ST000FM') PRIMARY KEY,
@@ -29,7 +33,15 @@ CREATE TABLE IF NOT EXISTS STORE (
 	stype VARCHAR(20),
 	loc_id INT,
 	CONSTRAINT fk_loc FOREIGN KEY(loc_id)
-		REFERENCES address(address_id)
+		REFERENCES address(address_id),
+	CONSTRAINT fk_floor FOREIGN KEY(floor_id)
+		REFERENCES mall_floor(floor_id)
+);
+
+CREATE TABLE IF NOT EXISTS PRODUCT(
+	product_id INT PRIMARY KEY,
+	pname VARCHAR(20) NOT NULL,
+	description VARCHAR(100)
 );
 
 CREATE SEQUENCE IF NOT EXISTS seq;
@@ -109,6 +121,81 @@ CREATE TABLE IF NOT EXISTS CARD (
 		REFERENCES manager(person_id)
 );
 
+CREATE TABLE IF NOT EXISTS CARD_PROMOTION (
+	promotion_id INT,
+	card_id CHAR(5),
+	promotion_desc text,
+	PRIMARY KEY (promotion_id, card_id),
+	CONSTRAINT fk_card_id FOREIGN KEY(card_id)
+		REFERENCES card(card_id)
+);
+
+CREATE SEQUENCE IF NOT EXISTS order_seq;
+CREATE TABLE IF NOT EXISTS ORDERS (
+	order_id INT DEFAULT nextval('order_seq') PRIMARY KEY,
+	on_date DATE DEFAULT current_date NOT NULL,
+	on_time TIME DEFAULT current_time NOT NULL,
+	at_store CHAR(5) NOT NULL,
+	total_balance REAL NOT NULL,
+	from_customer CHAR(4) NOT NULL,
+	CONSTRAINT fk_store FOREIGN KEY (at_store)
+		REFERENCES store(store_id),
+	CONSTRAINT fk_customer FOREIGN KEY (from_customer)
+		REFERENCES customer(person_id)
+);
+
+CREATE TABLE IF NOT EXISTS RECEIPT (
+	product_id INT,
+	order_id INT,
+	PRIMARY KEY (product_id, order_id),
+	CONSTRAINT fk_prod FOREIGN KEY (product_id)
+		REFERENCES product(product_id),
+	CONSTRAINT fk_order FOREIGN KEY (order_id)
+		REFERENCES orders(order_id)
+);
+
+CREATE SEQUENCE IF NOT EXISTS payment_seq;
+CREATE TABLE IF NOT EXISTS PYMT_INFO (
+	payment_id INT DEFAULT nextval('payment_seq') PRIMARY KEY,
+	cashier_id CHAR(4) NOT NULL,
+	on_date DATE DEFAULT current_date NOT NULL,
+	on_time TIME DEFAULT current_time NOT NULL,
+	amt_paid REAL NOT NULL,
+	pymt_method VARCHAR(10) NOT NULL,
+	CONSTRAINT chk_method CHECK(pymt_method in ('cash', 'credit', 'debit', 'membercard')),
+	CONSTRAINT fk_cashier FOREIGN KEY(cashier_id)
+		REFERENCES cashier(person_id)
+);
+
+CREATE TABLE IF NOT EXISTS PAYMENT (
+	order_id INT PRIMARY KEY,
+	customer_id CHAR(4),
+	payment_id INT,
+	CONSTRAINT fk_order FOREIGN KEY(order_id)
+		REFERENCES orders(order_id),
+	CONSTRAINT fk_customer FOREIGN KEY (customer_id)
+		REFERENCES customer(person_id),
+	CONSTRAINT fk_pymt FOREIGN KEY (payment_id)
+		REFERENCES pymt_info(payment_id)	
+);
+
+CREATE TABLE IF NOT EXISTS SCHEDULE (
+	store_id CHAR(5) PRIMARY KEY,
+	mgr_id CHAR(4) NOT NULL,
+	CONSTRAINT fk_mgr FOREIGN KEY(mgr_id)
+		REFERENCES manager(person_id)
+);
+
+CREATE TABLE IF NOT EXISTS OPEN_CLOSE_TIMES (
+	on_date DATE,
+	store_id CHAR(5),
+	open_t TIME, 
+	close_t TIME,
+	PRIMARY KEY(on_date, store_id),
+	CONSTRAINT fk_store FOREIGN KEY(store_id)
+		REFERENCES store(store_id)
+);
+
 CREATE TABLE IF NOT EXISTS ALLMEMBERS (
 	member_id CHAR(4) PRIMARY KEY,
 	card_id CHAR(4) NOT NULL,
@@ -118,14 +205,31 @@ CREATE TABLE IF NOT EXISTS ALLMEMBERS (
 		REFERENCES card(card_id)
 );
 
-CREATE TABLE IF NOT EXISTS FLOOR (
-	floor_id INT NOT NULL PRIMARY KEY
+CREATE TABLE IF NOT EXISTS GUEST (
+	member_id CHAR(4),
+	guest_id INT,
+	first_name VARCHAR(30) NOT NULL,
+	middle_name VARCHAR(30),
+	last_name VARCHAR(30) NOT NULL,
+	phone_no VARCHAR(10) NOT NULL,
+	loc_id INT NOT NULL,
+	PRIMARY KEY (member_id, guest_id),
+	CONSTRAINT phone_no_size CHECK(LENGTH(phone_no) = 10),
+	CONSTRAINT fk_locid FOREIGN KEY(loc_id)
+		REFERENCES address(address_id),
+	CONSTRAINT fk_member FOREIGN KEY (member_id)
+		REFERENCES allmembers(member_id)
 );
 
-CREATE TABLE IF NOT EXISTS PRODUCT(
-	product_id INT PRIMARY KEY,
-	pname VARCHAR(20) NOT NULL,
-	description VARCHAR(100)
+CREATE TABLE IF NOT EXISTS FS_MANAGES_FLOOR (
+	floor_id INT,
+	on_date DATE,
+	staff_id CHAR(4) NOT NULL,
+	PRIMARY KEY (floor_id, on_date),
+	CONSTRAINT fk_floor FOREIGN KEY(floor_id)
+		REFERENCES mall_floor(floor_id),
+	CONSTRAINT fk_staff FOREIGN KEY(staff_id)
+		REFERENCES floor_staff(person_id)
 );
 
 CREATE TABLE IF NOT EXISTS STOCK (
