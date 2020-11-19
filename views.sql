@@ -15,6 +15,8 @@ group by orders.from_customer, person.first_name having count(order_id) > 10
 
 
 -- Gold Store - tested on sample data
+create view Gold_Store("Store name")
+as
 SELECT sname
 FROM store
 where store.store_id = (
