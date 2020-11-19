@@ -166,7 +166,7 @@ CREATE TABLE IF NOT EXISTS ORDERS (
 	on_date DATE DEFAULT current_date NOT NULL,
 	on_time TIME DEFAULT current_time NOT NULL,
 	at_store VARCHAR(5) NOT NULL,
-	total_balance REAL NOT NULL,
+	total_balance REAL DEFAULT 0.0 NOT NULL,
 	from_customer VARCHAR(4) NOT NULL,
 	
 	CONSTRAINT fk_store FOREIGN KEY (at_store) REFERENCES store(store_id),
