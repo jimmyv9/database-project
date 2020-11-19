@@ -1,0 +1,14 @@
+P011	True
+P027	False
+P028	True
+P015	True
+P010	False
+P002	True
+P003	True
+P009	False
+P004	False
+P019	True
+P025	False
+P022	True
+P017	False
+P008	True

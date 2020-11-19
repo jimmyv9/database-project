@@ -1,0 +1,3 @@
+38112	Memphis	TN
+75248	Dallas	TX
+90210	Hollywood	CA

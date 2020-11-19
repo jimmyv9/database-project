@@ -1,0 +1,11 @@
+1	Walmart	Retail	2
+1	Target	Retail	2
+2	McDonalds	Food	2
+2	Burger King	Food	2
+2	Texas de Brazil	Food	2
+2	Smoothie King	Food	2
+2	Au Vin	Food	2
+3	Cartier	Luxury	2
+3	Pandora	Luxury	2
+3	Apple	Electronics	2
+3	Best Buy	Electronics	2
