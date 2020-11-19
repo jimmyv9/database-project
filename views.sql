@@ -5,7 +5,7 @@
 
 
 
--- Potential Member Customer
+-- Potential Member Customer - tested on sample data
 create view Potential_Member_Customer("First Name", "Orders count")
 as
 select person.first_name, count(order_id)from person inner join customer on 
@@ -14,7 +14,7 @@ where customer.is_member = false and (orders.on_date > CURRENT_DATE - INTERVAL '
 group by orders.from_customer, person.first_name having count(order_id) > 10
 
 
--- Gold Store
+-- Gold Store - tested on sample data
 SELECT sname
 FROM store
 where store.store_id = (
