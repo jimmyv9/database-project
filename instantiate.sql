@@ -3,8 +3,10 @@
 CREATE TABLE IF NOT EXISTS ZIP (
 	zip VARCHAR(5) PRIMARY KEY,
 	city VARCHAR(30) NOT NULL,
-	us_state VARCHAR(3) NOT NULL,
-	CONSTRAINT chk_state CHECK(LENGTH(us_state) = 2)
+	us_state VARCHAR(2) NOT NULL,
+	CONSTRAINT chk_state CHECK(LENGTH(us_state) = 2),
+	CONSTRAINT chk_zip CHECK(LENGTH(zip) = 5),
+	CONSTRAINT chk_zip_no CHECK(zip~'^[0-9]*$')
 );
 
 CREATE SEQUENCE IF NOT EXISTS addr_seq;
@@ -136,7 +138,7 @@ CREATE TABLE IF NOT EXISTS ORDERS (
 	on_date DATE DEFAULT current_date NOT NULL,
 	on_time TIME DEFAULT current_time NOT NULL,
 	at_store CHAR(5) NOT NULL,
-	total_balance REAL NOT NULL,
+	total_balance REAL DEFAULT 0.0 NOT NULL,
 	from_customer CHAR(4) NOT NULL,
 	CONSTRAINT fk_store FOREIGN KEY (at_store)
 		REFERENCES store(store_id),
@@ -147,6 +149,7 @@ CREATE TABLE IF NOT EXISTS ORDERS (
 CREATE TABLE IF NOT EXISTS RECEIPT (
 	product_id INT,
 	order_id INT,
+	quantity INT,
 	PRIMARY KEY (product_id, order_id),
 	CONSTRAINT fk_prod FOREIGN KEY (product_id)
 		REFERENCES product(product_id),

@@ -104,7 +104,7 @@ def make_hierarchy(people):
                                           people[i].ismember))
 
     with open('./populate/sql_cashier.txt', 'w') as fcash:
-        store = 0
+        store = 1
         for i in range(30):
             if people[i].belongs_to == 'cashier':
                 fcash.write('{}\t{}\t{}\n'.format(people[i].get_id(),
@@ -135,10 +135,11 @@ def make_hierarchy(people):
                                                   people[random.randint(0,1)].get_id()))
                     fmem.write('{}\t{}\n'.format(people[i].get_id(),
                                                  'CX'+str(card_id).zfill(3)))
+                    card_id += 1
 
 def read_people():
     people = []
-    idno = 0
+    idno = 1
     with open("./populate/sql_names.txt", 'r') as fin:
         for line in fin:
             line = line.strip('\n')
