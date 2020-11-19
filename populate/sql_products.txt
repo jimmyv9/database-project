@@ -1,0 +1,30 @@
+1	furniture pack	chair, desk, armchair, sofa set
+2	simple t-shirt	monochromatic t-shirt
+3	pattern t-shirt	shirt with patterns
+4	jeans	pair of jean pants
+5	shorts	pair of shorts
+6	burger	succulent burger
+7	fries	crisp fries
+8	chicken nuggets	greasy but delicious nuggets
+9	coca-cola	a refreshing cup of coke
+10	caipirinha	alcoholic drink with cachaca and limes
+11	buffet entry	all-you-can-eat meat
+12	foie gras	duck liver
+13	escargot	a slimy dinner
+14	baguette	appetizer bread
+15	red wine	pairs well with foie gras
+16	white wine	pairs well with desserts
+17	gold pen	to write in style
+18	diamond pen	to write in even more style
+19	luxury watch	keep time close to you
+20	ring	expensive jewelry
+21	necklace	expensive jewelry
+22	apple watch	timekeeping, but Apple
+23	iphone	latest model
+24	phone repair	fix your phone
+25	computer repair	fix your computer
+26	sound system	used to jam to the best tunes
+27	android phone	if you are not a fan of Apple products
+28	healthy mix	juice with many antioxidants
+29	sports shake	supplies the calories for a day of exercise
+30	frothy smoothie	the coldest a shake can offer
