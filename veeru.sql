@@ -226,6 +226,7 @@ CREATE TABLE IF NOT EXISTS PRODUCT_IN_STORE (
 CREATE TABLE IF NOT EXISTS RECEIPT (
 	product_id INT,
 	order_id INT,
+	quantity INT,
 	PRIMARY KEY (product_id, order_id),
 	CONSTRAINT fk_prod FOREIGN KEY (product_id)REFERENCES product(product_id),
 	CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders(order_id)
