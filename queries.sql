@@ -26,5 +26,3 @@ FROM (PERSON NATURAL JOIN FLOOR_STAFF);
 -- Find names of all managers
 SELECT first_name, last_name
 FROM (PERSON NATURAL JOIN MANAGER);
-
-

@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS MANAGER(
 --CARD
 CREATE SEQUENCE IF NOT EXISTS card_seq;
 CREATE TABLE IF NOT EXISTS CARD (
-	card_id VARCHAR(5) NOT NULL DEFAULT to_char(nextval('card_seq'), 'CX000FM') PRIMARY KEY,
+	card_id VARCHAR(5) DEFAULT to_char(nextval('card_seq'), 'X000FM') PRIMARY KEY,
 	issued DATE NOT NULL,
 	issued_by VARCHAR(4) NOT NULL,
 	CONSTRAINT fk_mgr FOREIGN KEY(issued_by) REFERENCES manager(person_id)
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS FLOOR_STAFF(
                                
 -- FLOOR
 CREATE TABLE IF NOT EXISTS MALL_FLOOR (
-	floor_id INT NOT NULL PRIMARY KEY
+	floor_id INT PRIMARY KEY
 );
                                
 -- FS_MANAGES_FLOOR
