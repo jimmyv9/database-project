@@ -67,3 +67,40 @@ ORDER BY COUNT(*) DESC
 LIMIT 1;
 
 
+
+
+
+
+-- 7 
+-- Gives us the store id and count of the product. I DON’T KNOW if we need the store name 
+select store_id, count (distinct product_id) from product_in_store group by store_id
+order by count (distinct product_id) desc  limit 1
+
+-- 8
+Guessing this means staff who worked in all the floors in past 1 week
+
+-- 9
+select product_id, store_id, price from Product_in_store;
+
+-- 10
+select floor_id from Store group by floor_id 
+order by count(store_id) desc limit 1
+
+-- 11
+select on_date, open_t, close_t, "Store_name" from OPEN_CLOSE_TIMES as schedule 
+inner join gold_store on schedule.store_id = "Store_id"
+
+--Simpler way to do this is the following command but it does not show the store name. So just stick to the above query
+select on_date, open_t, close_t from OPEN_CLOSE_TIMES as schedule where schedule.store_id = 
+(select "Store_id" from gold_store) 
+
+-- 12
+select store_id, sname from store where store_id = (
+select at_store from orders 
+where (orders.on_date > date('2020-01-01') - INTERVAL '1 week')
+group by at_store order by count(order_id) desc limit 1)
+
+-- 13
+select person_id, first_name, last_name from person where person.person_id = (
+	select mgr_id from Floor_staff group by mgr_id order by count(person_id) 
+	desc limit 1
