@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS FS_MANAGES_FLOOR (
 -- STORE
 CREATE SEQUENCE IF NOT EXISTS store_seq;
 CREATE TABLE IF NOT EXISTS STORE (
-	store_id VARCHAR(5) DEFAULT to_char(nextval('store_seq'), 'ST000FM') PRIMARY KEY,
+	store_id VARCHAR(5) DEFAULT to_char(nextval('store_seq'), '000FM') PRIMARY KEY,
 	floor_id INT,
 	sname VARCHAR(20),
 	stype VARCHAR(20),
