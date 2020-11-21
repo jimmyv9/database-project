@@ -234,8 +234,8 @@ CREATE TABLE IF NOT EXISTS RECEIPT (
 
 --SCHEDULE                              
 CREATE TABLE IF NOT EXISTS SCHEDULE (
-	store_id CHAR(5) PRIMARY KEY,
-	mgr_id CHAR(4) NOT NULL,
+	store_id VARCHAR(5) PRIMARY KEY,
+	mgr_id VARCHAR(4) NOT NULL,
 	CONSTRAINT fk_store_id FOREIGN KEY(store_id) REFERENCES store(store_id),
 	CONSTRAINT fk_mgr FOREIGN KEY(mgr_id) REFERENCES manager(person_id)
 );                              
