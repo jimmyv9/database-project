@@ -28,6 +28,7 @@ class store:
         #self.stock_id = 0
         self.menu = [] # Indexes products it sells
         self.schedule = [] # Indexes days and it's schedules
+        self.cashier = None
 
     def get_id(self):
         return str(self.idno).zfill(3)
@@ -50,6 +51,8 @@ def main():
     add_to_menus(all_stores)
     program_schedule(all_stores, all_people)
     make_orders(all_people, all_stores)
+    make_payments()
+    bring_guests(all_people)
     return
 
 def read_stores():
@@ -176,7 +179,7 @@ def make_hierarchy(people):
     with open('./populate/sql_member.txt', 'w') as fmem:
         managers = people[:2]
         with open('./populate/sql_card.txt', 'w') as fcard:
-            card_id = 0
+            card_id = 1
             for i in range(30):
                 if people[i].ismember:
                     date = random_date(d1, d2).strftime("%Y-%m-%d")
@@ -309,6 +312,32 @@ def make_orders(people, stores):
                                                             nonmember.get_id()))
 
 
+def make_payments():
+    cashier_store = {}
+    with open("./populate/sql_cashier.txt", 'r') as fcash:
+        for line in fcash:
+            line = line.strip('\n')
+            line = line.split('\t')
+            cashier_store[line[2]] = line[0]
+
+    with open("./populate/sql_orders.txt", 'r') as fin:
+        with open("./populate/sql_payments.txt", 'w') as fout:
+            with open("./populate/sql_pymtinfo.txt", 'w') as finfo:
+                for line in fin:
+                    line = line.strip('\n')
+                    line = line.split('\t')
+                    order_id = line[0]
+                    cust_id = line[-1]
+                    store_id = line[3]
+                    date = line[1]
+                    amt = line[-2]
+                    fout.write("{}\t{}\t{}\n".format(order_id, cust_id, order_id))
+                    finfo.write("{}\t{}\t{}\t{}\t{}\t{}\n".format(order_id,
+                                                                  cashier_store[store_id],
+                                                                  date,
+                                                                  "13:01:00",
+                                                                  amt, "credit"))
+
 def make_purchase(store_grp, order_id, n):
     total_balance = 0
     qty = {}
@@ -328,6 +357,19 @@ def make_purchase(store_grp, order_id, n):
             frcpt.write("{}\t{}\t{}\n".format(value, order_id, qty[value]))
 
     return chosen.get_id(), total_balance
+
+def bring_guests(people):
+    with open('./populate/sql_guest.txt', 'w') as fout:
+        for i in range(len(people)):
+            if people[i].belongs_to == 'customer' and people[i].ismember:
+                num_guests = random.randint(1, 25)
+                for guest_id in range(1, num_guests):
+                    fout.write("{}\t{}\t{}\t{}\t{}\t{}\n".format(people[i].get_id(),
+                                                                guest_id,
+                                                                 "John", "Doe",
+                                                                "4202529348",
+                                                                 random.randint(1,3)))
+
 
 def read_people():
     people = []
