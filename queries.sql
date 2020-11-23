@@ -77,7 +77,11 @@ select store_id, count (distinct product_id) from product_in_store group by stor
 order by count (distinct product_id) desc  limit 1
 
 -- 8
-Guessing this means staff who worked in all the floors in past 1 week
+select first_name, last_name, person.person_id from person 
+where person.person_id in 
+(select staff_id from fs_manages_floor 
+where (on_date > date('2020-01-01') - INTERVAL '1 week') 
+group by staff_id having count(distinct floor_id) = 3)
 
 -- 9
 select product_id, store_id, price from Product_in_store;
