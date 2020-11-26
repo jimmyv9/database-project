@@ -31,7 +31,7 @@ FROM (PERSON NATURAL JOIN MANAGER);
 
 -- 3
 -- Find average of orders made by potential member customers
-SELECT ROUND(AVG("Orders count"), 2)
+SELECT ROUND(AVG(Order_count), 2)
 FROM POTENTIAL_MEMBER_CUSTOMER;
 
 -- 4
