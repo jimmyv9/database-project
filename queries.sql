@@ -65,8 +65,9 @@ LIMIT 1;
 
 
 -- 7 //////////////////////////////////////////////////////////////////////////////////////////
--- Gives us the store id and count of the product. I DON’T KNOW if we need the store name 
-select store_id, count (distinct product_id) from product_in_store group by store_id
+-- Find the store that have most different products in stock.
+select store_id, sname, count (distinct product_id) from product_in_store 
+natural join Store group by store_id, sname
 order by count (distinct product_id) desc  limit 1
 
 -- 8 //////////////////////////////////////////////////////////////////////////////////////////
