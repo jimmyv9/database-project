@@ -98,3 +98,4 @@ group by at_store order by count(order_id) desc limit 1)
 select person_id, first_name, last_name from person where person.person_id = (
 	select mgr_id from Floor_staff group by mgr_id order by count(person_id) 
 	desc limit 1
+	)
