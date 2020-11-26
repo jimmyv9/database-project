@@ -77,7 +77,7 @@ where (on_date > Current_date - INTERVAL '1 week')
 group by staff_id having count(distinct floor_id) = 3)
 
 -- 9
-select product_id, store_id, price from Product_in_store;
+select pname, sname, price from Product_in_store natural join Store natural join Product;
 
 -- 10
 select floor_id from Store group by floor_id 
