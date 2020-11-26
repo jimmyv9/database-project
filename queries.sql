@@ -84,8 +84,8 @@ select floor_id from Store group by floor_id
 order by count(store_id) desc limit 1
 
 -- 11
-select on_date, open_t, close_t, "Store_name" from OPEN_CLOSE_TIMES as schedule 
-inner join gold_store on schedule.store_id = "Store_id"
+select on_date, open_t, close_t, Store_name from OPEN_CLOSE_TIMES as schedule 
+inner join gold_store on schedule.store_id = gold_store.Store_id
 
 --Simpler way to do this is the following command but it does not show the store name. So just stick to the above query
 select on_date, open_t, close_t from OPEN_CLOSE_TIMES as schedule where schedule.store_id = 
