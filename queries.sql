@@ -73,7 +73,7 @@ order by count (distinct product_id) desc  limit 1
 select first_name, last_name, person.person_id from person 
 where person.person_id in 
 (select staff_id from fs_manages_floor 
-where (on_date > date('2020-01-01') - INTERVAL '1 week') 
+where (on_date > Current_date - INTERVAL '1 week') 
 group by staff_id having count(distinct floor_id) = 3)
 
 -- 9
@@ -94,7 +94,7 @@ select on_date, open_t, close_t from OPEN_CLOSE_TIMES as schedule where schedule
 -- 12
 select store_id, sname from store where store_id = (
 select at_store from orders 
-where (orders.on_date > date('2020-01-01') - INTERVAL '1 week')
+where (orders.on_date > Current_date - INTERVAL '1 week')
 group by at_store order by count(order_id) desc limit 1)
 
 -- 13
