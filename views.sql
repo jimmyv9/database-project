@@ -34,7 +34,7 @@ group by orders.from_customer, person.first_name having count(order_id) > 10
 
 
 -- Gold Store
-CREATE VIEW Gold_Store2(Store_id, Store_name, Distinct_customers) as
+CREATE VIEW Gold_Store(Store_id, Store_name, Distinct_customers) as
 SELECT store_id, sname, COUNT(DISTINCT orders.from_customer)
 FROM store join orders on orders.at_store = store.store_id
 WHERE (orders.on_date > CURRENT_DATE - INTERVAL '1 year')
